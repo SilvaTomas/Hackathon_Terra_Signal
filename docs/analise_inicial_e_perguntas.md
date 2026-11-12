@@ -69,7 +69,7 @@ Quando o feedback diz que o cliente **já cancelou** (por exemplo "decided to ch
 
 Só essa regra acerta 98% dos churns, sem nenhum falso positivo. Esse tipo de expressão aparece em **25,6%** dos textos do `inference.csv`.
 
-Isso **contradiz** a resposta de que o feedback "pode ser de até alguns meses antes": nesses textos, o cliente escreve que já saiu. Consequências:
+Isso **parece não combinar** com a resposta de que o feedback "pode ser de até alguns meses antes": nesses textos, o cliente escreve que já saiu. A base não tem a data do feedback, então a ordem no tempo é uma hipótese a confirmar com a TS. Consequências:
 
 - Para o `prediction.csv`, usar o texto aumenta muito a nota.
 - Para o caso de uso real (prever *antes* de o cliente sair), o modelo não pode depender do texto de cancelamento. Proposta: **dois modelos** — (a) completo, com NLP, para a submissão; (b) só com dados cadastrais/contratuais, para o time de vendas agir antes do churn — e mostrar isso à banca.
@@ -123,7 +123,7 @@ Feito em Python local sobre os CSVs. Para o modelo: validação cruzada estratif
 | # | Pergunta | Resultado |
 |---|---|---|
 | 28 | Quais dores aparecem e quais se ligam ao churn? | **Preço**: 42,7% dos churners mencionam, e 100% de quem menciona cancelou. **Contrato/flexibilidade**: 68,2% dos churners. **Velocidade**: 37,6%. **Pagamento**: 30,5%. **Instabilidade**: 24,5%. **Atendimento**: 5,5%. **Mudança de vida**: 5,7%, com 100% de churn. |
-| 29 | Clientes ativos reclamam? | Quase nunca: só 129 dos 4.130 não churners têm texto negativo, e "estou pensando em sair" aparece só em 5 textos, todos de churners. No inference, só 40 textos são negativos sem falar em cancelamento. **Conclusão: o feedback é, na prática, um texto escrito depois do cancelamento.** Para clientes ativos, ele quase não traz sinal antecipado. |
+| 29 | Clientes ativos reclamam? | Quase nunca: só 129 dos 4.130 não churners têm texto negativo, e "estou pensando em sair" aparece só em 5 textos, todos de churners. No inference, só 40 textos são negativos sem falar em cancelamento. **O conteúdo do feedback dos churners indica que foi escrito depois da decisão de sair, mas a base não tem a data do texto: falta a TS confirmar como e quando ele é coletado.** Para clientes ativos, o texto quase não traz sinal antecipado. |
 
 **Desenho do modelo**
 
